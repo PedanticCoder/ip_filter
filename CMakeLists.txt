@@ -12,6 +12,8 @@ add_library(ip_filter_lib lib.cpp)
 
 add_executable(test_version test_version.cpp)
 
+add_library(filter_lib filter.cpp)
+
 set_target_properties(ip_filter PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
@@ -25,6 +27,7 @@ set_target_properties(test_version PROPERTIES
 
 target_link_libraries(ip_filter 
 	ip_filter_lib
+        filter_lib
 )
 
 target_link_libraries(test_version
