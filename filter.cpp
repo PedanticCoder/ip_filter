@@ -119,4 +119,3 @@ void reverseIpSort(std::vector<strVector> &pool)
             });
     writeAllPool(pool);
 }
-
