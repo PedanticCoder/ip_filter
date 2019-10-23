@@ -53,30 +53,6 @@ void writeIpToConsole(strVector& tmp)
               << tmp.at(3) << std::endl;
 }
 
-void filter(uint8_t firstByte, std::vector<strVector> &pool)
-{
-    std::string str = std::to_string(firstByte);
-    std::for_each(pool.begin(), pool.end(),
-                      [=](strVector tmp)
-                        {
-                            if(tmp.at(0)==str)
-                                 writeIpToConsole(tmp);
-                        });
-
-}
-
-void filter(uint8_t firstByte, uint8_t secondByte, std::vector<strVector> &pool)
-{
-    std::string str = std::to_string(firstByte);
-    std::string str2 = std::to_string(secondByte);
-    std::for_each(pool.begin(), pool.end(),
-                      [=](strVector tmp)
-                       {
-                           if(tmp.at(0)==str && tmp.at(1)==str2)
-                                writeIpToConsole(tmp);
-                       });
-}
-
 void filterAny(uint8_t anyByte, std::vector<strVector> &pool)
 {
     std::string str = std::to_string(anyByte);
@@ -94,28 +70,30 @@ void filterAny(uint8_t anyByte, std::vector<strVector> &pool)
 void reverseIpSort(std::vector<strVector> &pool)
 {
     sort(pool.begin(), pool.end(),
-            [](strVector tmp, strVector tmp2)  {
-                if(atoi(tmp.at(0).c_str()) > atoi(tmp2.at(0).c_str()))
-                    return true;
-                else if(atoi(tmp.at(0).c_str()) == atoi(tmp2.at(0).c_str())
-                        && atoi(tmp.at(1).c_str()) > atoi(tmp2.at(1).c_str()))
-                {
-                    return true;
-                }
-                else if(atoi(tmp.at(1).c_str()) == atoi(tmp2.at(1).c_str())
-                        && atoi(tmp.at(2).c_str()) > atoi(tmp2.at(2).c_str()))
-                {
-                    return true;
-                }
-                else if(atoi(tmp.at(2).c_str()) == atoi(tmp2.at(2).c_str())
-                        && atoi(tmp.at(3).c_str()) > atoi(tmp2.at(3).c_str()))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            });
-    writeAllPool(pool);
+                [](strVector tmp, strVector tmp2)  {
+                    if(atoi(tmp.at(0).c_str()) > atoi(tmp2.at(0).c_str()))
+                        return true;
+                    else if(atoi(tmp.at(0).c_str()) == atoi(tmp2.at(0).c_str())
+                            && atoi(tmp.at(1).c_str()) > atoi(tmp2.at(1).c_str()))
+                    {
+                        return true;
+                    }
+                    else if(atoi(tmp.at(1).c_str()) == atoi(tmp2.at(1).c_str())
+                            && atoi(tmp.at(2).c_str()) > atoi(tmp2.at(2).c_str()))
+                    {
+                        return true;
+                    }
+                    else if(atoi(tmp.at(2).c_str()) == atoi(tmp2.at(2).c_str())
+                            && atoi(tmp.at(3).c_str()) > atoi(tmp2.at(3).c_str()))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+        writeAllPool(pool);
 }
+
+

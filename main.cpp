@@ -7,15 +7,44 @@
 #include <vector>
 #include <algorithm>
 
+void filter(int firstByte, std::vector<strVector> &pool)
+{
+    std::string str = std::to_string(firstByte);
+    std::for_each(pool.begin(), pool.end(),
+                      [=](strVector tmp)
+                        {
+                            if(tmp.at(0)==str)
+                                 writeIpToConsole(tmp);
+                        });
+}
+
+void filter(int firstByte, int secondByte, std::vector<strVector> &pool)
+{
+    std::string str = std::to_string(firstByte);
+    std::string str2 = std::to_string(secondByte);
+    std::for_each(pool.begin(), pool.end(),
+                      [=](strVector tmp)
+                       {
+                           if(tmp.at(0)==str && tmp.at(1)==str2)
+                                writeIpToConsole(tmp);
+                       });
+}
+
+template<typename... Args>
+void filterWrapper(Args... args)
+{
+    filter(args...);
+}
+
 int main()
 {
     try
     {
-	std::vector<strVector> ip_pool;
+        std::vector<strVector> ip_pool;
         readAllPool(ip_pool);
         reverseIpSort(ip_pool);
-        filter(1, ip_pool);
-        filter(46, 70, ip_pool);
+        filterWrapper(1, ip_pool);
+        filterWrapper(46, 70, ip_pool);
         filterAny(46, ip_pool);
    }
     catch(const std::exception &e)
