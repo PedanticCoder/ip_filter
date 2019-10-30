@@ -37,7 +37,6 @@ void writeAllPool(std::vector<strVector> &pool)
             if (ip_part != ip->cbegin())
             {
                 std::cout << ".";
-
             }
             std::cout << *ip_part;
         }
@@ -45,7 +44,38 @@ void writeAllPool(std::vector<strVector> &pool)
     }
 }
 
-void writeIpToConsole(strVector& tmp)
+void writeAllPoolIP(std::vector<intVector> &pool)
+{
+    for(std::vector<std::vector<int> >::const_iterator ip = pool.cbegin(); ip != pool.cend(); ++ip)
+    {
+        for(std::vector<int>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
+        {
+            if (ip_part != ip->cbegin())
+            {
+                std::cout << ".";
+            }
+            std::cout << *ip_part;
+        }
+        std::cout << std::endl;
+    }
+}
+
+std::vector<intVector> initializeIpPoolInt(std::vector<strVector> &pool)
+{
+   poolInt.reserve(pool.size());
+   std::vector<int> num(4);
+   for(ulong i = 0; i < pool.size(); ++i) {
+       num[0] = atoi(pool.at(i).at(0).c_str());
+       num[1] = atoi(pool.at(i).at(1).c_str());
+       num[2] = atoi(pool.at(i).at(2).c_str());
+       num[3] = atoi(pool.at(i).at(3).c_str());
+
+       poolInt.push_back(num);
+   }
+   return poolInt;
+}
+
+void writeIpToConsole(intVector& tmp)
 {
     std::cout << tmp.at(0) << "."
               << tmp.at(1) << "."
@@ -53,38 +83,37 @@ void writeIpToConsole(strVector& tmp)
               << tmp.at(3) << std::endl;
 }
 
-void filterAny(uint8_t anyByte, std::vector<strVector> &pool)
+void filterAny(uint8_t anyByte, std::vector<intVector> &pool)
 {
-    std::string str = std::to_string(anyByte);
     std::for_each(pool.begin(), pool.end(),
-                      [=](strVector tmp)
+                      [=](intVector tmp)
                        {
-                           if(tmp.at(0)==str ||
-                              tmp.at(1)==str ||
-                              tmp.at(2)==str ||
-                              tmp.at(3)==str   )
+                           if(tmp.at(0)==anyByte ||
+                              tmp.at(1)==anyByte ||
+                              tmp.at(2)==anyByte ||
+                              tmp.at(3)==anyByte   )
                                 writeIpToConsole(tmp);
                        });
 }
 
-void reverseIpSort(std::vector<strVector> &pool)
+void reverseIpSort(std::vector<intVector> &pool)
 {
     sort(pool.begin(), pool.end(),
-                [](strVector tmp, strVector tmp2)  {
-                    if(atoi(tmp.at(0).c_str()) > atoi(tmp2.at(0).c_str()))
+                [](intVector tmp, intVector tmp2)  {
+                    if(tmp.at(0) > tmp2.at(0))
                         return true;
-                    else if(atoi(tmp.at(0).c_str()) == atoi(tmp2.at(0).c_str())
-                            && atoi(tmp.at(1).c_str()) > atoi(tmp2.at(1).c_str()))
+                    else if((tmp.at(0) == tmp2.at(0))
+                            && (tmp.at(1) > tmp2.at(1)))
                     {
                         return true;
                     }
-                    else if(atoi(tmp.at(1).c_str()) == atoi(tmp2.at(1).c_str())
-                            && atoi(tmp.at(2).c_str()) > atoi(tmp2.at(2).c_str()))
+                    else if((tmp.at(1) == tmp2.at(1))
+                            && (tmp.at(2) > tmp2.at(2)))
                     {
                         return true;
                     }
-                    else if(atoi(tmp.at(2).c_str()) == atoi(tmp2.at(2).c_str())
-                            && atoi(tmp.at(3).c_str()) > atoi(tmp2.at(3).c_str()))
+                    else if((tmp.at(2) == tmp2.at(2))
+                            && (tmp.at(3) > tmp2.at(3)))
                     {
                         return true;
                     }
@@ -93,7 +122,6 @@ void reverseIpSort(std::vector<strVector> &pool)
                         return false;
                     }
                 });
-        writeAllPool(pool);
+        writeAllPoolIP(pool);
 }
-
 
