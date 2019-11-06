@@ -7,42 +7,33 @@
 #include <vector>
 #include <algorithm>
 
-void filter(int firstByte, std::vector<intVector> &pool)
+template<typename T>
+intVectIP variadicContainer(T arg)
 {
-    std::for_each(pool.begin(), pool.end(),
-                      [=](intVector tmp)
-                        {
-                            if(tmp.at(0)==firstByte)
-                                 writeIpToConsole(tmp);
-                        });
+    partPoolVar.push_back(arg);
+    return partPoolVar;
 }
 
-void filter(int firstByte, int secondByte, std::vector<intVector> &pool)
+template<typename T, typename... Args>
+intVectIP variadicContainer(T firstArg, Args... args)
 {
-    std::for_each(pool.begin(), pool.end(),
-                      [=](intVector tmp)
-                       {
-                           if(tmp.at(0)==firstByte && tmp.at(1)==secondByte)
-                                writeIpToConsole(tmp);
-                       });
-}
-
-template<typename... Args>
-void filterWrapper(Args... args)
-{
-    filter(args...);
+    variadicContainer(firstArg);
+    variadicContainer(args...);
+    return partPoolVar;
 }
 
 int main()
 {
     try
     {
-        std::vector<strVector> ip_pool;
+        std::vector<strVectIP> ip_pool;
         readAllPool(ip_pool);
         poolInt = initializeIpPoolInt(ip_pool);
         reverseIpSort(poolInt);
-        filterWrapper(1, poolInt);
-        filterWrapper(46, 70, poolInt);
+        partIpPool = variadicContainer(1);
+        filterModified(partIpPool, poolInt);
+        partIpPool = variadicContainer(46, 70);
+        filterModified(partIpPool, poolInt);
         filterAny(46, poolInt);
     }
     catch(const std::exception &e)
